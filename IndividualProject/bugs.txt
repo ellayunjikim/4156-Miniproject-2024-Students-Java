@@ -1,8 +1,9 @@
 Keeping track of bugs to fix:
 
-## Course.java
-- ennrollStudent(): always returns false
-- dropStudent(): always returns false
+`Course.java`
+- ennrollStudent(): always returns false (need to check if student can enroll (capacity))
+- dropStudent(): always returns false (need to check if there is a student to drop (number of enrolled students not 0))
 - isCourseFull(): should be opposite logic
-- getCourseLocation(): returns instructor name
-- getInstructorName(): returns course locaion
+- getCourseLocation(): returns instructor name instead of course locaion
+- getInstructorName(): returns course locaion instead of instructor name
+
