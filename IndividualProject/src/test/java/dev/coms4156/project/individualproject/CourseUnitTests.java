@@ -79,6 +79,7 @@ public class CourseUnitTests {
     String newInstructor = "Ella Kim";
     testCourse.reassignInstructor(newInstructor);
     assertEquals(newInstructor, testCourse.getInstructorName());
+    testCourse.reassignInstructor("Griffin Newbold");
   }
 
   @Test
@@ -86,6 +87,7 @@ public class CourseUnitTests {
     String newLocation = "CSB 451";
     testCourse.reassignLocation(newLocation);
     assertEquals(newLocation, testCourse.getCourseLocation());
+    testCourse.reassignLocation("417 IAB");
   }
 
   @Test
@@ -93,6 +95,7 @@ public class CourseUnitTests {
     String newTime = "1:00-2:20";
     testCourse.reassignTime(newTime);
     assertEquals(newTime, testCourse.getCourseTimeSlot());
+    testCourse.reassignTime("11:40-12:55");
   }
 
   /** The test course instance used for testing. */
