@@ -1,11 +1,19 @@
 package dev.coms4156.project.individualproject;
 
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * A Spring Boot test.
+ * 
+ * <p>Used to test Spring Boot components and configurations in a Spring application context.
+ * The test class {@code CourseUnitTests} is run within the Spring context to allow testing
+ * of Spring-managed components.
+ */
 @SpringBootTest
 @ContextConfiguration
 public class CourseUnitTests {
