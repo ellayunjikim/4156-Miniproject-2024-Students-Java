@@ -1,0 +1,8 @@
+Keeping track of bugs to fix:
+
+## Course.java
+- ennrollStudent(): always returns false
+- dropStudent(): always returns false
+- isCourseFull(): should be opposite logic
+- getCourseLocation(): returns instructor name
+- getInstructorName(): returns course locaion
