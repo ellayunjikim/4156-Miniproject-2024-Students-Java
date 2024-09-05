@@ -7,3 +7,8 @@ Keeping track of bugs to fix:
 - getCourseLocation(): returns instructor name instead of course locaion
 - getInstructorName(): returns course locaion instead of instructor name
 
+`Department.java`
+- Line 37: getNumberOfMajors() return value should not be negative.
+- Line 46: getDepartmentChair() return value should be not quotation marked.
+- Line 69: If number of people in major is 0, should not drop to -1. 
+- Line 110: toString() return value should be not quotation marked.
