@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,8 +29,8 @@ public class DepartmentUnitTests {
    *  
    * <p>This method is executed once before all tests in the test class.
   */
-  @BeforeAll
-  public static void setupDepartmentForTesting() {
+  @BeforeEach
+  public void setupDepartmentForTesting() {
     Course coms3456 = new Course("Griffin Newbold", "417 IAB", "11:40-12:55", 250);
     coms3456.setEnrolledStudentCount(240);
     HashMap<String, Course> courses = new HashMap<>();
