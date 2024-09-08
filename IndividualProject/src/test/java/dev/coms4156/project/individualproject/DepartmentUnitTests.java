@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -16,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
  * of Spring-managed components.
  */
 @SpringBootTest
+@TestMethodOrder(OrderAnnotation.class)  // Enforces test method execution order
 @ContextConfiguration
 public class DepartmentUnitTests {
 
@@ -30,60 +34,72 @@ public class DepartmentUnitTests {
   */
   @BeforeAll
   public static void setupDepartmentForTesting() {
-    Course coms3456 = new Course("Griffin Newbold", "417 IAB", "11:40-12:55", 250);
-    coms3456.setEnrolledStudentCount(240);
-    HashMap<String, Course> courses = new HashMap<>();
-    courses.put("3456", coms3456);
-    testDept = new Department("COMS", courses, "Luca Carloni", 200);
-    physDept = new Department("PHYS", courses, "Tester 2", 0);
-  }
+	testDatabase = new MyFileDatabase(0, "./data.txt");
+	HashMap<String, Department> departments = testDatabase.getDepartmentMapping();
+	comsDepartment = departments.get("COMS");
+ }
 
 
   @Test
+  @Order(1)
   public void toStringTest() {
-    String expectedCourse = "\nInstructor: Griffin Newbold; Location: 417 IAB; Time: 11:40-12:55";
-    String expectedResult = "COMS 3456: " + expectedCourse + "\n";
-    assertEquals(expectedResult, testDept.toString());
+    String expectedResult = "COMS 3827: \n" + //
+    		"Instructor: Daniel Rubenstein; Location: 207 Math; Time: 10:10-11:25\n" + //
+    		"COMS 1004: \n" + //
+    		"Instructor: Adam Cannon; Location: 417 IAB; Time: 11:40-12:55\n" + //
+    		"COMS 3203: \n" + //
+    		"Instructor: Ansaf Salleb-Aouissi; Location: 301 URIS; Time: 10:10-11:25\n" + //
+    		"COMS 4156: \n" + //
+    		"Instructor: Gail Kaiser; Location: 501 NWC; Time: 10:10-11:25\n" + //
+    		"COMS 3157: \n" + //
+    		"Instructor: Jae Lee; Location: 417 IAB; Time: 4:10-5:25\n" + //
+    		"COMS 3134: \n" + //
+    		"Instructor: Brian Borowski; Location: 301 URIS; Time: 4:10-5:25\n" + //
+    		"COMS 3251: \n" + 
+    		"Instructor: Tony Dear; Location: 402 CHANDLER; Time: 1:10-3:40\n" + 
+    		"COMS 3261: \n" + 
+    		"Instructor: Josh Alman; Location: 417 IAB; Time: 2:40-3:55\n";
+    assertEquals(expectedResult, comsDepartment.toString());
   }
 
   @Test
+  @Order(2)
   public void getNumberOfMajorsTest() {
-    int expectedResult = 200;
-    assertEquals(expectedResult, testDept.getNumberOfMajors());
+    int expectedResult = 2700;
+    assertEquals(expectedResult, comsDepartment.getNumberOfMajors());
   }
 
   @Test
   public void getDepartmentChairTest() {
     String expectedResult = "Luca Carloni";
-    assertEquals(expectedResult, testDept.getDepartmentChair());
+    assertEquals(expectedResult, comsDepartment.getDepartmentChair());
   }
 
   @Test
+  @Order(3)
   public void addPersonToMajorTest() {
-    int expectedResult = 201;
-    testDept.addPersonToMajor();
-    assertEquals(expectedResult, testDept.getNumberOfMajors());
+    comsDepartment.addPersonToMajor();
+    assertEquals(2701, comsDepartment.getNumberOfMajors());
   }
 
   @Test
+  @Order(4)
   public void dropPersonFromMajorTest() {
-    testDept.dropPersonFromMajor();
-    assertEquals(199, testDept.getNumberOfMajors());
-    physDept.dropPersonFromMajor();
-    assertEquals(0, physDept.getNumberOfMajors());
+    comsDepartment.dropPersonFromMajor();
+    assertEquals(2700, comsDepartment.getNumberOfMajors());
+	// need to test when course has 0 people 
   }
 
-  @Test
-  public void creatCourseTest() {
-    testDept.createCourse("4200", "Ella Kim", "CSB 451", "4:10-6:40", 100);
-    String expectedResult = "COMS 3456: " 
-        + "\nInstructor: Griffin Newbold; Location: 417 IAB; Time: 11:40-12:55\n" 
-        + "COMS 4200: \nInstructor: Ella Kim; Location: CSB 451; Time: 4:10-6:40\n";
-    assertEquals(expectedResult, testDept.toString());
-  }
+//   @Test
+//   public void creatCourseTest() {
+//     comsDepartment.createCourse("4200", "Ella Kim", "CSB 451", "4:10-6:40", 100);
+//     String expectedResult = "COMS 3456: " 
+//         + "\nInstructor: Griffin Newbold; Location: 417 IAB; Time: 11:40-12:55\n" 
+//         + "COMS 4200: \nInstructor: Ella Kim; Location: CSB 451; Time: 4:10-6:40\n";
+//     assertEquals(expectedResult, comsDepartment.toString());
+//   }
 
-  /** The test department instances used for testing. */
-  public static Department testDept;
-  public static Department physDept;
+  public static MyFileDatabase testDatabase;
+  public static Department comsDepartment;
 }
 

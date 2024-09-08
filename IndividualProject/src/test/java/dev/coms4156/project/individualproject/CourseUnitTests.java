@@ -2,6 +2,8 @@ package dev.coms4156.project.individualproject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashMap;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,39 +22,41 @@ public class CourseUnitTests {
 
   @BeforeAll
   public static void setupCourseForTesting() {
-    testCourse = new Course("Griffin Newbold", "417 IAB", "11:40-12:55", 250);
+    testDatabase = new MyFileDatabase(0, "./data.txt");
+    HashMap<String, Department> departments = testDatabase.getDepartmentMapping();
+    Department comsDept = departments.get("COMS"); 
+    testCourse = comsDept.getCourseSelection().get("1004");
   }
-
 
   @Test
   public void toStringTest() {
-    String expectedResult = "\nInstructor: Griffin Newbold; Location: 417 IAB; Time: 11:40-12:55";
+    String expectedResult = "\nInstructor: Adam Cannon; Location: 417 IAB; Time: 11:40-12:55";
     assertEquals(expectedResult, testCourse.toString());
   }
 
   @Test
   public void enrollStudentTest() {
-    testCourse.setEnrolledStudentCount(250);
-    assertEquals(false, testCourse.enrollStudent());
-    testCourse.setEnrolledStudentCount(100);
     assertEquals(true, testCourse.enrollStudent());
+    testCourse.setEnrolledStudentCount(400);
+    assertEquals(false, testCourse.enrollStudent());
+	testCourse.setEnrolledStudentCount(249);
   }
 
   @Test
   public void dropStudentTest() {
-    testCourse.setEnrolledStudentCount(240);
     assertEquals(true, testCourse.dropStudent());
     testCourse.setEnrolledStudentCount(0);
     assertEquals(false, testCourse.dropStudent());
+	testCourse.setEnrolledStudentCount(249);
   }
 
   @Test
   public void isCourseFullTest() {
     testCourse.setEnrolledStudentCount(0);
     assertEquals(false, testCourse.isCourseFull());
-    testCourse.setEnrolledStudentCount(250);
+    testCourse.setEnrolledStudentCount(410);
     assertEquals(true, testCourse.isCourseFull());
-    testCourse.setEnrolledStudentCount(251);
+    testCourse.setEnrolledStudentCount(400);
     assertEquals(true, testCourse.isCourseFull());
   }
 
@@ -64,7 +68,7 @@ public class CourseUnitTests {
 
   @Test
   public void getInstructorNameTest() {
-    String expectedResult = "Griffin Newbold";
+    String expectedResult = "Adam Cannon";
     assertEquals(expectedResult, testCourse.getInstructorName());
   }
 
@@ -76,10 +80,10 @@ public class CourseUnitTests {
 
   @Test
   public void reassignInstructorTest() {
-    String newInstructor = "Ella Kim";
+    String newInstructor = "Griffin Newbold";
     testCourse.reassignInstructor(newInstructor);
     assertEquals(newInstructor, testCourse.getInstructorName());
-    testCourse.reassignInstructor("Griffin Newbold");
+    testCourse.reassignInstructor("Adam Cannon");
   }
 
   @Test
@@ -100,5 +104,6 @@ public class CourseUnitTests {
 
   /** The test course instance used for testing. */
   public static Course testCourse;
+  public static MyFileDatabase testDatabase;
 }
 
