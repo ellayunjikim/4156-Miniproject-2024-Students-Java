@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -34,31 +34,31 @@ public class DepartmentUnitTests {
   */
   @BeforeAll
   public static void setupDepartmentForTesting() {
-	testDatabase = new MyFileDatabase(0, "./data.txt");
-	HashMap<String, Department> departments = testDatabase.getDepartmentMapping();
-	comsDepartment = departments.get("COMS");
- }
+    testDatabase = new MyFileDatabase(0, "./data.txt");
+    HashMap<String, Department> departments = testDatabase.getDepartmentMapping();
+    comsDepartment = departments.get("COMS");
+  }
 
 
   @Test
   @Order(1)
   public void toStringTest() {
-    String expectedResult = "COMS 3827: \n" + //
-    		"Instructor: Daniel Rubenstein; Location: 207 Math; Time: 10:10-11:25\n" + //
-    		"COMS 1004: \n" + //
-    		"Instructor: Adam Cannon; Location: 417 IAB; Time: 11:40-12:55\n" + //
-    		"COMS 3203: \n" + //
-    		"Instructor: Ansaf Salleb-Aouissi; Location: 301 URIS; Time: 10:10-11:25\n" + //
-    		"COMS 4156: \n" + //
-    		"Instructor: Gail Kaiser; Location: 501 NWC; Time: 10:10-11:25\n" + //
-    		"COMS 3157: \n" + //
-    		"Instructor: Jae Lee; Location: 417 IAB; Time: 4:10-5:25\n" + //
-    		"COMS 3134: \n" + //
-    		"Instructor: Brian Borowski; Location: 301 URIS; Time: 4:10-5:25\n" + //
-    		"COMS 3251: \n" + 
-    		"Instructor: Tony Dear; Location: 402 CHANDLER; Time: 1:10-3:40\n" + 
-    		"COMS 3261: \n" + 
-    		"Instructor: Josh Alman; Location: 417 IAB; Time: 2:40-3:55\n";
+    String expectedResult = "COMS 3827: \n" 
+         + "Instructor: Daniel Rubenstein; Location: 207 Math; Time: 10:10-11:25\n" 
+         +  "COMS 1004: \n" 
+         +  "Instructor: Adam Cannon; Location: 417 IAB; Time: 11:40-12:55\n"
+         +  "COMS 3203: \n" 
+         +  "Instructor: Ansaf Salleb-Aouissi; Location: 301 URIS; Time: 10:10-11:25\n"
+         +  "COMS 4156: \n"
+         +  "Instructor: Gail Kaiser; Location: 501 NWC; Time: 10:10-11:25\n" 
+         +  "COMS 3157: \n" 
+         +  "Instructor: Jae Lee; Location: 417 IAB; Time: 4:10-5:25\n"
+         +  "COMS 3134: \n" 
+         +  "Instructor: Brian Borowski; Location: 301 URIS; Time: 4:10-5:25\n"
+         +  "COMS 3251: \n"
+         +  "Instructor: Tony Dear; Location: 402 CHANDLER; Time: 1:10-3:40\n" 
+         +  "COMS 3261: \n"
+         +  "Instructor: Josh Alman; Location: 417 IAB; Time: 2:40-3:55\n";
     assertEquals(expectedResult, comsDepartment.toString());
   }
 
@@ -87,17 +87,7 @@ public class DepartmentUnitTests {
   public void dropPersonFromMajorTest() {
     comsDepartment.dropPersonFromMajor();
     assertEquals(2700, comsDepartment.getNumberOfMajors());
-	// need to test when course has 0 people 
   }
-
-//   @Test
-//   public void creatCourseTest() {
-//     comsDepartment.createCourse("4200", "Ella Kim", "CSB 451", "4:10-6:40", 100);
-//     String expectedResult = "COMS 3456: " 
-//         + "\nInstructor: Griffin Newbold; Location: 417 IAB; Time: 11:40-12:55\n" 
-//         + "COMS 4200: \nInstructor: Ella Kim; Location: CSB 451; Time: 4:10-6:40\n";
-//     assertEquals(expectedResult, comsDepartment.toString());
-//   }
 
   public static MyFileDatabase testDatabase;
   public static Department comsDepartment;

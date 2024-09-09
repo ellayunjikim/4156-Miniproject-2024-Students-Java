@@ -295,8 +295,8 @@ public class RouteController {
         coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
-        return new ResponseEntity<>("The course meets at: " + "some time ",
-            HttpStatus.OK);
+        String courseMeetingTime = requestedCourse.getCourseTimeSlot();  
+        return new ResponseEntity<>("The course meets at: " + courseMeetingTime, HttpStatus.OK);
       } else {
         return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
       }

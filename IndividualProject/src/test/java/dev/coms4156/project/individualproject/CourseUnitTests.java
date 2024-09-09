@@ -3,7 +3,6 @@ package dev.coms4156.project.individualproject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +19,15 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration
 public class CourseUnitTests {
 
+  /**
+   * Sets up the course and test database for use in testing.
+   * 
+   * <p>This method initializes the test database by loading data from 
+   * the specified file ("./data.txt") and retrieves the "COMS" department. 
+   * From the "COMS" department, it selects the course "1004" to be used 
+   * in test cases. This method is annotated with {@code @BeforeAll}, 
+   * meaning it will run once before any of the tests in the class are executed.
+   */
   @BeforeAll
   public static void setupCourseForTesting() {
     testDatabase = new MyFileDatabase(0, "./data.txt");
@@ -39,7 +47,7 @@ public class CourseUnitTests {
     assertEquals(true, testCourse.enrollStudent());
     testCourse.setEnrolledStudentCount(400);
     assertEquals(false, testCourse.enrollStudent());
-	testCourse.setEnrolledStudentCount(249);
+    testCourse.setEnrolledStudentCount(249);
   }
 
   @Test
@@ -47,7 +55,7 @@ public class CourseUnitTests {
     assertEquals(true, testCourse.dropStudent());
     testCourse.setEnrolledStudentCount(0);
     assertEquals(false, testCourse.dropStudent());
-	testCourse.setEnrolledStudentCount(249);
+    testCourse.setEnrolledStudentCount(249);
   }
 
   @Test

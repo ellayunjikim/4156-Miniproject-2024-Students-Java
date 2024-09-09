@@ -67,7 +67,7 @@ public class Department implements Serializable {
    */
   public void dropPersonFromMajor() {
     if (numberOfMajors != 0) {
-	  numberOfMajors--;
+      numberOfMajors--;
     }
   }
 
