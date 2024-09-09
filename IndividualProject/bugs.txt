@@ -12,3 +12,6 @@ Keeping track of bugs to fix:
 - Line 46 getDepartmentChair(): return value should be not quotation marked.
 - Line 69 dropPersonFromMajor(): If number of people in major is 0, should not drop to -1.
 - Line 110: toString() return value should be not quotation marked.
+
+`RouteController.java`
+- findCourseTime(): Unused variable `requestedCourse`; returned "some time" instead of real time slot of the requested course. 
