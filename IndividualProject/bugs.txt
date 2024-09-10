@@ -19,6 +19,9 @@ PMD:
 - MissingOverride:	The method 'toString()' is missing an @Override annotation.
 
 `RouteController.java`
+- retrieveDept(): Should be returning NOT_FOUND if department does not contain this deptCode key instead of OK; same opposite logic for else case
+- retrieveCourse(): Should be reutrning OK if the course is found (instead of FORBIDDEN). 
+- getMajorCtFromDept(): Returns `-departmentMapping.get(deptCode)` but should be positive. Returns "FORBIDDEN" when department is not found, but makes more sense to be NOT_FOUND.
 - findCourseTime(): Unused variable `requestedCourse`; returned "some time" instead of real time slot of the requested course. 
 PMD: 
 - UnnecessaryAnnotationValueElement: Avoid the use of value in annotations when its the only element

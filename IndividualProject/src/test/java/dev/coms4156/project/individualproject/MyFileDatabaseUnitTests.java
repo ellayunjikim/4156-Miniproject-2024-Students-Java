@@ -33,7 +33,7 @@ public class MyFileDatabaseUnitTests {
   }
 
   @Test
-  public void testDeSerializeObjectFromEmptyFile() {
+  public void testDeSerializeObjectFromInvalidFile() {
     MyFileDatabase invalidDatabase = new MyFileDatabase(0, INVALID_FILE);
     assertEquals(Collections.emptyMap(), invalidDatabase.deSerializeObjectFromFile());
   }
