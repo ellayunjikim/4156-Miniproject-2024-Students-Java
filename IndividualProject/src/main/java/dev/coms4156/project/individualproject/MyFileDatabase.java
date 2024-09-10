@@ -54,7 +54,6 @@ public Map<String, Department> deSerializeObjectFromFile() {
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();
       return Collections.emptyMap();
-
     }
   }
 
