@@ -3,7 +3,10 @@ package dev.coms4156.project.individualproject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
  * of Spring-managed components.
  */
 @SpringBootTest
+@TestMethodOrder(OrderAnnotation.class)  // Enforces test method execution order
 @ContextConfiguration
 public class RouteControllerUnitTests {
   /**
@@ -121,6 +125,7 @@ public class RouteControllerUnitTests {
   }
 
   @Test
+  @Order(1)
   public void getMajorCountFromDeptTest() {
     assertEquals(
         HttpStatus.OK,
@@ -151,6 +156,62 @@ public class RouteControllerUnitTests {
     assertEquals("Course Not Found", routeController.findCourseLocation("BAD", 3000).getBody());
     assertEquals(HttpStatus.NOT_FOUND, 
          routeController.findCourseLocation("BAD", 3000).getStatusCode());
+  }
+
+  @Test
+  public void findCourseInstructorTest() {
+    assertEquals("Gail Kaiser is the instructor for the course.", 
+        routeController.findCourseInstructor("COMS", 4156).getBody());
+    assertEquals(HttpStatus.OK, 
+        routeController.findCourseInstructor("COMS", 4156).getStatusCode());
+    assertEquals("Course Not Found", routeController.findCourseInstructor("BAD", 30).getBody());
+    assertEquals(HttpStatus.NOT_FOUND, 
+        routeController.findCourseInstructor("BAD", 30).getStatusCode());
+  }
+
+  @Test
+  public void findCourseTimeTest() {
+    assertEquals("The course meets at: " + "10:10-11:25", 
+        routeController.findCourseTime("COMS", 4156).getBody());
+    assertEquals(HttpStatus.OK, 
+        routeController.findCourseTime("COMS", 4156).getStatusCode());
+    assertEquals("Course Not Found", routeController.findCourseTime("BAD", 30).getBody());
+    assertEquals(HttpStatus.NOT_FOUND, 
+        routeController.findCourseTime("BAD", 30).getStatusCode());
+  }
+
+  @Test
+  public void addMajorToDeptTest() {
+    assertEquals(HttpStatus.OK, 
+        routeController.addMajorToDept("COMS").getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, 
+        routeController.addMajorToDept("BAD").getStatusCode());
+  }
+
+  @Test
+  public void removeMajorFromDeptTest() {
+    assertEquals(HttpStatus.OK, 
+        routeController.removeMajorFromDept("COMS").getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, 
+        routeController.removeMajorFromDept("BAD").getStatusCode());
+  }
+
+  @Test
+  public void dropStudentFromCourseTest() {
+    assertEquals(HttpStatus.OK, 
+        routeController.dropStudent("COMS", 3134).getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, 
+        routeController.dropStudent("BAD", 3133).getStatusCode());
+  }
+
+  @Test
+  public void setEnrollmentCountTest() {
+    assertEquals(HttpStatus.OK, 
+        routeController.setEnrollmentCount("COMS", 3134, 300).getStatusCode());
+    assertEquals(HttpStatus.NOT_ACCEPTABLE, 
+        routeController.setEnrollmentCount("COMS", 3134, -300).getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, 
+        routeController.setEnrollmentCount("BAD", 3133, 0).getStatusCode());
   }
 
   public static RouteController routeController;

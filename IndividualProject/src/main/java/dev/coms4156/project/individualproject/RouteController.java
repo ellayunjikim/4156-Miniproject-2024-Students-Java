@@ -434,6 +434,9 @@ public class RouteController {
         coursesMapping = departmentMapping.get(deptCode).getCourseSelection();
 
         Course requestedCourse = coursesMapping.get(Integer.toString(courseCode));
+        if (count < 0) {
+          return new ResponseEntity<>("Not acceptable negative value.", HttpStatus.NOT_ACCEPTABLE);
+        }
         requestedCourse.setEnrolledStudentCount(count);
         return new ResponseEntity<>("Attributed was updated successfully.", HttpStatus.OK);
       } else {

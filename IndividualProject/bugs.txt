@@ -6,6 +6,7 @@ Keeping track of bugs to fix:
 - isCourseFull(): should be opposite logic
 - getCourseLocation(): returns instructor name instead of course locaion
 - getInstructorName(): returns course locaion instead of instructor name
+- setEnrolledStudentCount(): should not be able to set it below 0. 
 PMD:
 - MissingOverride:	The method 'toString()' is missing an @Override annotation.
 
@@ -23,6 +24,7 @@ PMD:
 - retrieveCourse(): Should be reutrning OK if the course is found (instead of FORBIDDEN). 
 - getMajorCtFromDept(): Returns `-departmentMapping.get(deptCode)` but should be positive. Returns "FORBIDDEN" when department is not found, but makes more sense to be NOT_FOUND.
 - findCourseTime(): Unused variable `requestedCourse`; returned "some time" instead of real time slot of the requested course. 
+- setEnrollmentCount(): Should not accept negative number of students enroll count.
 PMD: 
 - UnnecessaryAnnotationValueElement: Avoid the use of value in annotations when its the only element
 - LooseCoupling: Avoid using implementation types like 'HashMap'; use the interface instead
