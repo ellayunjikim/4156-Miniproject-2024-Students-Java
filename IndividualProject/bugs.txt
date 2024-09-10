@@ -6,12 +6,31 @@ Keeping track of bugs to fix:
 - isCourseFull(): should be opposite logic
 - getCourseLocation(): returns instructor name instead of course locaion
 - getInstructorName(): returns course locaion instead of instructor name
+PMD:
+- MissingOverride:	The method 'toString()' is missing an @Override annotation.
 
 `Department.java`
-- Line 37 getNumberOfMajors(): return value should not be negative.
-- Line 46 getDepartmentChair(): return value should be not quotation marked.
-- Line 69 dropPersonFromMajor(): If number of people in major is 0, should not drop to -1.
-- Line 110: toString() return value should be not quotation marked.
+- getNumberOfMajors(): return value should not be negative.
+- getDepartmentChair(): return value should be not quotation marked.
+- dropPersonFromMajor(): If number of people in major is 0, should not drop to -1.
+- toString() return value should be not quotation marked.
+PMD:
+- (use Map instead of HashMap) LooseCoupling: Avoid using implementation types like 'HashMap'; use the interface instead
+- MissingOverride:	The method 'toString()' is missing an @Override annotation.
 
 `RouteController.java`
 - findCourseTime(): Unused variable `requestedCourse`; returned "some time" instead of real time slot of the requested course. 
+PMD: 
+- UnnecessaryAnnotationValueElement: Avoid the use of value in annotations when its the only element
+- LooseCoupling: Avoid using implementation types like 'HashMap'; use the interface instead
+- UseLocaleWithCaseConversions:	When doing a String.toLowerCase()/toUpperCase() call, use a Locale
+
+`IndividualProjectApplication.java`
+PMD:
+- LiteralsFirstInComparisons: Position literals first in String comparisons
+- LooseCoupling: (use Map instead of HashMap) Avoid using implementation types like 'HashMap'; use the interface instead
+
+`MyFileDatabase.java`
+PMD: 
+- LooseCoupling: Avoid using implementation types like 'HashMap'; use the interface instead
+- ReturnEmptyCollectionRatherThanNull:	(return Collections.emptyMap() instead) Return an empty collection rather than null.
