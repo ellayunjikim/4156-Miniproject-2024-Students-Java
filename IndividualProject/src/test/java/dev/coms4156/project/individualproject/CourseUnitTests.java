@@ -2,7 +2,7 @@ package dev.coms4156.project.individualproject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +31,7 @@ public class CourseUnitTests {
   @BeforeAll
   public static void setupCourseForTesting() {
     testDatabase = new MyFileDatabase(0, "./data.txt");
-    HashMap<String, Department> departments = testDatabase.getDepartmentMapping();
+    Map<String, Department> departments = testDatabase.getDepartmentMapping();
     Department comsDept = departments.get("COMS"); 
     testCourse = comsDept.getCourseSelection().get("1004");
   }
