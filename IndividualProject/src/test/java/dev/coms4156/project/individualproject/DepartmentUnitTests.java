@@ -25,10 +25,7 @@ public class DepartmentUnitTests {
 
   /**
    * Sets up the initial test environment by creating test instances of 
-   * the Department and Course classes. This method initializes a 
-   * 'COMS' department and a 'PHYS' department, each with a predefined 
-   * course. The course COMS3456 is created with a name, location, time, 
-   * capacity, and an enrolled student count of 240.
+   * the Department and Course classes loaded from data.txt
    *  
    * <p>This method is executed once before all tests in the test class.
   */
