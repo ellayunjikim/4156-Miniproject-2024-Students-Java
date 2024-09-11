@@ -1,9 +1,10 @@
 Keeping track of bugs to fix:
 
 `Course.java`
-- ennrollStudent(): always returns false (need to check if student can enroll (capacity))
+- Course object enrolledStudentCount starts as 500. Should be initially 0. 
+- ennrollStudent(): always returns false (need to check if student can enroll (doesn't exceed capacity))
 - dropStudent(): always returns false (need to check if there is a student to drop (number of enrolled students not 0))
-- isCourseFull(): should be opposite logic
+- isCourseFull(): returns opposite bool, should be opposite logic
 - getCourseLocation(): returns instructor name instead of course locaion
 - getInstructorName(): returns course locaion instead of instructor name
 - setEnrolledStudentCount(): should not be able to set it below 0. 
