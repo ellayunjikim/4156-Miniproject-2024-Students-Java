@@ -19,6 +19,9 @@ public class Course implements Serializable {
    * @param capacity           The maximum number of students that can enroll in the course.
    */
   public Course(String instructorName, String courseLocation, String timeSlot, int capacity) {
+    if (capacity < 0) {
+      throw new IllegalArgumentException("Capacity cannot be negative");
+    }
     this.courseLocation = courseLocation;
     this.instructorName = instructorName;
     this.courseTimeSlot = timeSlot;
@@ -31,7 +34,7 @@ public class Course implements Serializable {
    *
    * @return true if the student is successfully enrolled, false otherwise.
    */
-  public boolean enrollStudent() {
+  public synchronized boolean enrollStudent() {
     if (enrolledStudentCount == enrollmentCapacity) {
       return false;
     }
@@ -44,7 +47,7 @@ public class Course implements Serializable {
    *
    * @return true if the student is successfully dropped, false otherwise.
    */
-  public boolean dropStudent() {
+  public synchronized boolean dropStudent() {
     if (enrolledStudentCount == 0) {
       return false;
     }
@@ -81,26 +84,45 @@ public class Course implements Serializable {
         + "; Time: " + courseTimeSlot;
   }
 
-
+  /**
+   * Reassigns the course instructor.
+   *
+   * @param newInstructorName the new name of the instructor
+   */
   public void reassignInstructor(String newInstructorName) {
     this.instructorName = newInstructorName;
   }
 
-
+  /**
+   * Reassigns the location.
+   *
+   * @param newLocation the new location 
+   */
   public void reassignLocation(String newLocation) {
     this.courseLocation = newLocation;
   }
 
-
+  /**
+   * Reassigns the course time.
+   *
+   * @param newTime the new time slot
+   */
   public void reassignTime(String newTime) {
     this.courseTimeSlot = newTime;
   }
 
-
+  /**
+   * Set enrolledStudentCount between 0 and enrollmentCapacity.
+   *
+   * @param count Number of students for enrollment
+   */
   public void setEnrolledStudentCount(int count) {
-    this.enrolledStudentCount = count;
+    if (count >= 0 && count <= enrollmentCapacity) {
+      this.enrolledStudentCount = count;
+    } else {
+      throw new IllegalArgumentException("Invalid student count");
+    }
   }
-
 
   public boolean isCourseFull() {
     return enrollmentCapacity <= enrolledStudentCount;
