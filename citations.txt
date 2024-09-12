@@ -1,0 +1,9 @@
+Resources:
+
+- Edstem posts/discussions: https://edstem.org/us/courses/58089/discussion/
+
+- Unit tests: https://www.google.com/search?client=safari&rls=en&q=unit+testing&ie=UTF-8&oe=UTF-8
+
+- PMD set up: https://pmd.github.io
+
+- Git PR: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
