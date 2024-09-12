@@ -21,6 +21,9 @@ public class Department implements Serializable {
    */
   public Department(String deptCode, Map<String, Course> courses, String departmentChair,
                     int numberOfMajors) {
+    if (numberOfMajors < 0) {
+      throw new IllegalArgumentException("Number of majors cannot be negative");
+    }
     this.courses = courses;
     this.departmentChair = departmentChair;
     this.numberOfMajors = numberOfMajors;
@@ -57,16 +60,18 @@ public class Department implements Serializable {
   /**
    * Increases the number of majors in the department by one.
    */
-  public void addPersonToMajor() {
+  public synchronized void addPersonToMajor() {
     numberOfMajors++;
   }
 
   /**
    * Decreases the number of majors in the department by one if it's greater than zero.
    */
-  public void dropPersonFromMajor() {
-    if (numberOfMajors != 0) {
+  public synchronized void dropPersonFromMajor() {
+    if (numberOfMajors > 0) {
       numberOfMajors--;
+    } else {
+      throw new IllegalStateException("Cannot drop person from major when count is zero");
     }
   }
 
