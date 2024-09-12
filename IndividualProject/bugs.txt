@@ -1,42 +1,148 @@
-Keeping track of bugs to fix:
+### `Course.java`
 
-`Course.java`
-- Course object enrolledStudentCount starts as 500. Should be initially 0. 
-- ennrollStudent(): always returns false (need to check if student can enroll (doesn't exceed capacity))
-- dropStudent(): always returns false (need to check if there is a student to drop (number of enrolled students not 0))
-- isCourseFull(): returns opposite bool, should be opposite logic
-- getCourseLocation(): returns instructor name instead of course locaion
-- getInstructorName(): returns course locaion instead of instructor name
-- setEnrolledStudentCount(): should not be able to set it below 0. 
-PMD:
-- MissingOverride:	The method 'toString()' is missing an @Override annotation.
+1. **Initial enrolled student count**:
+   - **Issue**: `Course` object `enrolledStudentCount` starts at 500.
+   - **Fix**: It should be initialized to 0.
 
-`Department.java`
-- getNumberOfMajors(): return value should not be negative.
-- getDepartmentChair(): return value should be not quotation marked.
-- dropPersonFromMajor(): If number of people in major is 0, should not drop to -1.
-- toString() return value should be not quotation marked.
-PMD:
-- (use Map instead of HashMap) LooseCoupling: Avoid using implementation types like 'HashMap'; use the interface instead
-- MissingOverride:	The method 'toString()' is missing an @Override annotation.
+2. **`enrollStudent()`**:
+   - **Issue**: always returns `false` without checking if a student can enroll.
+   - **Fix**: Implement logic to check if the number of enrolled students is less than the capacity and return `true` if a student is successfully enrolled.
 
-`RouteController.java`
-- retrieveDept(): Should be returning NOT_FOUND if department does not contain this deptCode key instead of OK; same opposite logic for else case
-- retrieveCourse(): Should be reutrning OK if the course is found (instead of FORBIDDEN). 
-- getMajorCtFromDept(): Returns `-departmentMapping.get(deptCode)` but should be positive. Returns "FORBIDDEN" when department is not found, but makes more sense to be NOT_FOUND.
-- findCourseTime(): Unused variable `requestedCourse`; returned "some time" instead of real time slot of the requested course. 
-- setEnrollmentCount(): Should not accept negative number of students enroll count.
-PMD: 
-- UnnecessaryAnnotationValueElement: Avoid the use of value in annotations when its the only element
-- LooseCoupling: Avoid using implementation types like 'HashMap'; use the interface instead
-- UseLocaleWithCaseConversions:	When doing a String.toLowerCase()/toUpperCase() call, use a Locale
+3. **`dropStudent()`**:
+   - **Issue**: always returns `false` without checking if a student can be dropped.
+   - **Fix**: Implement logic to check if there are students enrolled and return `true` if a student is successfully dropped.
 
-`IndividualProjectApplication.java`
-PMD:
-- LiteralsFirstInComparisons: Position literals first in String comparisons
-- LooseCoupling: (use Map instead of HashMap) Avoid using implementation types like 'HashMap'; use the interface instead
+4. **`isCourseFull()`**:
+   - **Issue**: return the wrong boolean value.
+   - **Fix**: Ensure the method returns `true` if the number of enrolled students equals or exceeds the course capacity.
 
-`MyFileDatabase.java`
-PMD: 
-- LooseCoupling: Avoid using implementation types like 'HashMap'; use the interface instead
-- ReturnEmptyCollectionRatherThanNull:	(return Collections.emptyMap() instead) Return an empty collection rather than null.
+5. **`getCourseLocation()`**:
+   - **Issue**: Expected to return the course location but was thought to return the instructor's name.
+   - **Fix**: Ensure it returns the correct field.
+
+6. **`getInstructorName()`**:
+   - **Issue**: Expected to return the instructor's name but was thought to return the course location.
+   - **Fix**: Ensure it returns the correct field.
+
+7. **`setEnrolledStudentCount()`**:
+   - **Issue**: Allows setting the enrolled student count to negative values or values greater than the capacity.
+   - **Fix**: Add validation to ensure that the count is between `0` and the `enrollmentCapacity`.
+
+8. **Possible race conditions in `enrollStudent()` and `dropStudent()`**:
+   - **Issue**: If multiple students attempt to enroll or drop concurrently, it may lead to race conditions.
+   - **Fix**: Synchronize the methods to avoid race conditions in a multi-threaded environment.
+
+9. **Constructor allows negative capacity**:
+   - **Issue**: The `Course` constructor does not validate that the `capacity` is non-negative.
+   - **Fix**: Add validation to ensure that the course capacity is non-negative.
+
+10. **PMD: Missing @Override annotation for `toString()`**:
+   - **Issue**: The `toString()` method is missing the `@Override` annotation.
+   - **Fix**: Add the `@Override` annotation above the method.
+
+-------
+
+### `Department.java`
+
+1. **`getNumberOfMajors()`**:
+   - **Issue**: The number of majors should never be negative.
+   - **Fix**: Ensure the number of majors is non-negative.
+
+2. **`getDepartmentChair()`**:
+   - **Issue**: The method should return the name of the department chair without quotation marks.
+   - **Fix**: Ensure it returns a properly formatted string.
+
+3. **`dropPersonFromMajor()`**:
+   - **Issue**: Can reduce the number of majors below zero.
+   - **Fix**: Ensure the number of majors cannot drop below zero.
+
+4. **`toString()`**:
+   - **Issue**: Should return a formatted string representing the department.
+   - **Fix**: Ensure it returns a properly formatted string.
+
+5. **Race condition in `addPersonToMajor()` and `dropPersonFromMajor()`**:
+   - **Issue**: If multiple threads modify the number of majors concurrently.
+   - **Fix**: Synchronize these methods to avoid race conditions.
+
+7. **`numberOfMajors` in the Constructor**:
+   - **Issue**: `numberOfMajors` should not be allowed to be negative when initializing the department.
+   - **Fix**: Add validation to ensure the number of majors is non-negative.
+
+8. **PMD: Loose Coupling (use `Map` instead of `HashMap`)**:
+   - **Issue**: The code uses `HashMap` instead of the `Map` interface.
+   - **Fix**: Refactor to use the `Map` interface for flexibility.
+
+9. **PMD: Missing @Override annotation for `toString()`**:
+   - **Issue**: The `toString()` method is missing the `@Override` annotation.
+   - **Fix**: Add the `@Override` annotation above the method.
+
+-------
+
+### `RouteController.java`
+
+1. **`retrieveDept()`**:
+   - **Issue**: returns `HttpStatus.OK` if the department is not found, which is incorrect. It should return `HttpStatus.NOT_FOUND`. The else case should return `HttpStatus.OK` when the department is found, not `HttpStatus.NOT_FOUND`.
+   - **Fix**: Swap the return status codes for the department not found and found.
+
+2. **`retrieveCourse()`**:
+   - **Issue**: returns `HttpStatus.FORBIDDEN` when a course is found. It should return `HttpStatus.OK`.
+   - **Fix**: Change the `HttpStatus.FORBIDDEN` to `HttpStatus.OK` when the course is found.
+
+3. **`getMajorCtFromDept()`**:
+   - **Issue**: Returns `-departmentMapping.get(deptCode).getNumberOfMajors()`, which results in a negative value.
+   - When the department is not found, it returns `HttpStatus.FORBIDDEN` instead of `HttpStatus.NOT_FOUND`.
+   - **Fix**: 
+   1. Remove the negative sign. 
+   2. Change the response status to `HttpStatus.NOT_FOUND`.
+
+4. **`findCourseTime()`**:
+   - **Issue**: `requestedCourse` is declared but never used.
+   - **Fix**: Use the variable to return the actual time of the course instead of "some time".
+
+5. **`setEnrollmentCount()`**:
+   - **Issue**: Allows setting count negative values
+   - **Fix**: Add validation to ensure the count is non-negative before setting it.
+
+6. **PMD: Unnecessary `value` Element in Annotations**:
+   - **Issue**: Annotations like `@RequestMapping(value = "/path")` can be simplified by removing the `value` element when it is the only attribute.
+   - **Fix**: Simplify annotations by omitting the `value` attribute.
+
+7. **PMD: Use of `HashMap` Instead of `Map`**:
+   - **Issue**: The code uses `HashMap` instead of `Map` for department and course mappings, reducing flexibility.
+   - **Fix**: Use `Map` for loose coupling.
+
+8. **PMD: Use Locale with Case Conversions**:
+   - **Issue**: The method `toUpperCase()` in `retrieveDepartment()` does not use a `Locale`, which could lead to incorrect behavior in different locales.
+   - **Fix**: Add a `Locale` parameter to ensure consistent behavior across different locales.
+
+9. **Redundant Department and Course Code**:
+	- not really a bug, but lots of duplicate code for retrieving Department and Course objects. 
+	- Fix: Refactor into helper methods getDepartment() and getCourse() to reduce redundancy.
+
+---
+
+### `MyFileDatabase.java`
+
+1. **File Path Validation**:
+   - **Issue**: Check if the path is invalid or empty.
+   - **Fix**: Add validation to ensure that `filePath` is not null or empty.
+
+2. **PMD: Returning `null` Instead of Empty Collection**:
+   - **Issue**: The method previously returned `null` when deserialization failed, which could lead to `NullPointerException` in calling code.
+   - **Fix**: Return an empty collection (`Collections.emptyMap()`) instead of `null`.
+
+3. **PMD: Use of `HashMap` Instead of `Map`**:
+   - **Issue**: The method `deSerializeObjectFromFile()` casts the deserialized object to `HashMap`, reducing flexibility.
+   - **Fix**: Use `Map<String, Department>` instead of `HashMap` for loose coupling.
+
+---
+
+### `IndividualProjectApplication.java`
+
+1. **PMD: Literals First In Comparisons**:
+	- **Issue**: Position literals first in String comparisons
+	- **Fix**: `("setup".equals(arg)) `instead of` (arg.equals("setup"))`
+
+2. **PMD: Loose Coupling (use `Map` instead of `HashMap`)**:
+   - **Issue**: The code uses `HashMap` instead of the `Map` interface.
+   - **Fix**: Refactor to use the `Map` interface for flexibility.
