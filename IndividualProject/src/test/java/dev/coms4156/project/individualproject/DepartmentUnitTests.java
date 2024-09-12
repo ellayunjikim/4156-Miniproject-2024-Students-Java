@@ -1,6 +1,7 @@
 package dev.coms4156.project.individualproject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,6 +35,7 @@ public class DepartmentUnitTests {
     testDatabase = new MyFileDatabase(0, "./data.txt");
     Map<String, Department> departments = testDatabase.getDepartmentMapping();
     comsDepartment = departments.get("COMS");
+    emptyDept = new Department("EMPTY", null, "Test", 0);
   }
 
 
@@ -84,9 +86,13 @@ public class DepartmentUnitTests {
   public void dropPersonFromMajorTest() {
     comsDepartment.dropPersonFromMajor();
     assertEquals(2700, comsDepartment.getNumberOfMajors());
+    assertThrows(IllegalStateException.class, () -> {
+      emptyDept.dropPersonFromMajor();
+    }, "Expected dropPersonFromMajor() to throw, but it didn't");
   }
 
   public static MyFileDatabase testDatabase;
   public static Department comsDepartment;
+  public static Department emptyDept;
 }
 

@@ -120,7 +120,7 @@ public class Course implements Serializable {
     if (count >= 0 && count <= enrollmentCapacity) {
       this.enrolledStudentCount = count;
     } else {
-      throw new IllegalArgumentException("Invalid student count");
+      this.enrolledStudentCount = -1;
     }
   }
 

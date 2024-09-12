@@ -123,15 +123,11 @@
 
 ### `MyFileDatabase.java`
 
-1. **File Path Validation**:
-   - **Issue**: Check if the path is invalid or empty.
-   - **Fix**: Add validation to ensure that `filePath` is not null or empty.
-
-2. **PMD: Returning `null` Instead of Empty Collection**:
+1. **PMD: Returning `null` Instead of Empty Collection**:
    - **Issue**: The method previously returned `null` when deserialization failed, which could lead to `NullPointerException` in calling code.
    - **Fix**: Return an empty collection (`Collections.emptyMap()`) instead of `null`.
 
-3. **PMD: Use of `HashMap` Instead of `Map`**:
+2. **PMD: Use of `HashMap` Instead of `Map`**:
    - **Issue**: The method `deSerializeObjectFromFile()` casts the deserialized object to `HashMap`, reducing flexibility.
    - **Fix**: Use `Map<String, Department>` instead of `HashMap` for loose coupling.
 

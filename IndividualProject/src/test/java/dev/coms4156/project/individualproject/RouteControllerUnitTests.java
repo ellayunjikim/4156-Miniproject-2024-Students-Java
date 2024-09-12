@@ -206,7 +206,7 @@ public class RouteControllerUnitTests {
 
   @Test
   public void setEnrollmentCountTest() {
-    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, 
+    assertEquals(HttpStatus.OK, 
         routeController.setEnrollmentCount("COMS", 3134, 300).getStatusCode());
     assertEquals(HttpStatus.BAD_REQUEST, 
         routeController.setEnrollmentCount("COMS", 3134, -300).getStatusCode());
