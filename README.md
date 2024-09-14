@@ -1,3 +1,6 @@
+Name: Ella Kim
+UNI: yk3040
+
 # Static Bug Finder - PMD
 
 This project utilizes PMD, a static code analysis tool, to detect potential bugs, code style issues, and performance problems in Java code. PMD helps to enforce best practices and improve overall code quality by scanning the source code for predefined patterns and rule violations.
